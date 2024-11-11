@@ -6,9 +6,12 @@
   outputs = { self, nixpkgs }: {
     packages = {
       darwin = {
-        aarch64 = import ./default.nix {
-          inherit (nixpkgs.pkgs) lib fetchurl stdenv makeWrapper undmg;
-        };
+        aarch64 = let
+          pkgs = import nixpkgs { system = "aarch64-darwin"; };
+        in
+          import ./default.nix {
+            inherit (pkgs) lib fetchurl stdenv makeWrapper undmg;
+          };
       };
     };
   };

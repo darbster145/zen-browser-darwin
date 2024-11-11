@@ -4,8 +4,10 @@
   inputs.nixpkgs.url = "github:NixOS/nixpkgs";
 
   outputs = { self, nixpkgs }: {
-    packages.darwin = {
-      aarch64 = nixpkgs.lib.mkFlake { inherit self; packages = { zen = import ./default.nix; }; };
+    packages = {
+      darwin = {
+        aarch64 = import ./default.nix { inherit (nixpkgs) lib; };
+      };
     };
   };
 }

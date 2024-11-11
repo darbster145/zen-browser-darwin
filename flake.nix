@@ -7,7 +7,7 @@
     packages = {
       darwin = {
         aarch64 = import ./default.nix {
-          inherit (nixpkgs) lib fetchurl stdenv makeWrapper undmg;
+          inherit (nixpkgs.pkgs) lib fetchurl stdenv makeWrapper undmg;
         };
       };
     };

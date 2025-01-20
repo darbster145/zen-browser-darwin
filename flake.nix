@@ -8,13 +8,13 @@
       pkgs = import nixpkgs { inherit system; };
     in pkgs.stdenv.mkDerivation rec {
       pname = "zen-browser";
-      version = "1.0.2-b.5";
+      version = "1.7.1b";
 
       platformSuffix = if pkgs.stdenv.hostPlatform.system == "aarch64-darwin" then "aarch64" else "x64";
 
       src = pkgs.fetchurl {
         url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.macos-${platformSuffix}.dmg";
-        hash = "sha256-CrxDnH+h9JYYxi1l3PQdZuoEKJk7t7oJzjVHPc07rHU=";
+        hash = "sha256-/iugUmG8qywJNHc+bROF2+aKWsHaeQ0GS2MpKiLgCYw=";
       };
 
       dontBuild = true;

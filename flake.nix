@@ -8,11 +8,11 @@
       pkgs = import nixpkgs { inherit system; };
     in pkgs.stdenv.mkDerivation rec {
       pname = "zen-browser";
-      version = "1.7.4b";
+      version = "1.7.5b";
 
       src = pkgs.fetchurl {
         url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.macos-universal.dmg";
-        hash = "sha256-SsgIz9yC+Xk2tN7KjmEzD7CKISH1xlTniMzw0Lgorwc=";
+        hash = "sha256-HB5LooCMeHgn416nQQsqfp1QrUYGi8e71qStg4mlvug=";
       };
 
       dontBuild = true;

@@ -3,46 +3,50 @@
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs";
 
-  outputs = { self, nixpkgs }: let
-    packageFor = system: let
-      pkgs = import nixpkgs { inherit system; };
-    in pkgs.stdenv.mkDerivation rec {
-      pname = "zen-browser";
-      version = "1.7.6b";
+  outputs = { self, nixpkgs }:
+    let
+      packageFor = system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        pkgs.stdenv.mkDerivation rec {
+          pname = "zen-browser";
+          version = "1.7.6b";
 
-      src = pkgs.fetchurl {
-        url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.macos-universal.dmg";
-        hash = "sha256-tO9yioBP3HBgskMzQ3fKhcjAK/XpZ5Affr2Kr69GxzE=";
-      };
+          src = pkgs.fetchurl {
+            url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.macos-universal.dmg";
+            hash = "sha256-tO9yioBP3HBgskMzQ3fKhcjAK/XpZ5Affr2Kr69GxzE=";
+          };
 
-      dontBuild = true;
-      dontConfigure = true;
-      nativeBuildInputs = [ pkgs.undmg pkgs.makeWrapper ];
+          dontBuild = true;
+          dontConfigure = true;
+          nativeBuildInputs = [ pkgs.undmg pkgs.makeWrapper ];
 
-      unpackPhase = ''
-        undmg "$src"
-      '';
+          unpackPhase = ''
+            undmg "$src"
+          '';
 
-      installPhase = ''
-        mkdir -p "$out/Applications" "$out/bin"
-        cp -R "Zen Browser.app" "$out/Applications/Zen Browser.app"
-        makeWrapper "$out/Applications/Zen Browser.app/Contents/MacOS/zen" \
-          "$out/bin/${pname}"
-      '';
+          installPhase = ''
+            mkdir -p "$out/Applications" "$out/bin"
+            cp -R "Zen Browser.app" "$out/Applications/Zen Browser.app"
+            makeWrapper "$out/Applications/Zen Browser.app/Contents/MacOS/zen" \
+              "$out/bin/${pname}"
+          '';
 
-      meta = with pkgs.lib; {
-        description = "Firefox-based browser with a focus on privacy and customization";
-        homepage = "https://www.zen-browser.app/";
-        license = licenses.mpl20;
-        platforms = [ "x86_64-darwin" "aarch64-darwin" ];
-      };
+          meta = with pkgs.lib; {
+            description = "Firefox-based browser with a focus on privacy and customization";
+            homepage = "https://www.zen-browser.app/";
+            license = licenses.mpl20;
+            platforms = [ "x86_64-darwin" "aarch64-darwin" ];
+          };
+        };
+    in
+    {
+      packages.x86_64-darwin = packageFor "x86_64-darwin";
+      packages.aarch64-darwin = packageFor "aarch64-darwin";
+
+      defaultPackage.x86_64-darwin = self.packages.x86_64-darwin;
+      defaultPackage.aarch64-darwin = self.packages.aarch64-darwin;
     };
-  in {
-    packages.x86_64-darwin = packageFor "x86_64-darwin";
-    packages.aarch64-darwin = packageFor "aarch64-darwin";
-
-    defaultPackage.x86_64-darwin = self.packages.x86_64-darwin;
-    defaultPackage.aarch64-darwin = self.packages.aarch64-darwin;
-  };
 }
 

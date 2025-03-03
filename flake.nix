@@ -11,11 +11,11 @@
         in
         pkgs.stdenv.mkDerivation rec {
           pname = "zen-browser";
-          version = "1.7.6b";
+          version = "1.8.2b";
 
           src = pkgs.fetchurl {
             url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.macos-universal.dmg";
-            hash = "sha256-tO9yioBP3HBgskMzQ3fKhcjAK/XpZ5Affr2Kr69GxzE=";
+            hash = "sha256-PAu+NP6ywAM0DjHVSFo6nDvltIa6lLiFxgmUlylPaeQ=";
           };
 
           dontBuild = true;
@@ -28,8 +28,8 @@
 
           installPhase = ''
             mkdir -p "$out/Applications" "$out/bin"
-            cp -R "Zen Browser.app" "$out/Applications/Zen Browser.app"
-            makeWrapper "$out/Applications/Zen Browser.app/Contents/MacOS/zen" \
+            cp -R "Zen.app" "$out/Applications/Zen.app"
+            makeWrapper "$out/Applications/Zen.app/Contents/MacOS/zen" \
               "$out/bin/${pname}"
           '';
 

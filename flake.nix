@@ -11,11 +11,11 @@
         in
         pkgs.stdenv.mkDerivation rec {
           pname = "zen-browser";
-          version = "1.10.3b";
+          version = "1.11.5b";
 
           src = pkgs.fetchurl {
             url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.macos-universal.dmg";
-            hash = "sha256-IIg60S5rzP/8dBfWYFZYym/Pb6OSRbBMTAf3ZInu1QM=";
+            hash = "sha256-iONb4jqWW6XKZA0BwNr9KkaTw7mLtkwF6S/veN4gktU=";
           };
 
           dontBuild = true;
